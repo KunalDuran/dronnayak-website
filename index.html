@@ -1,212 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Dronnayak - Powering Autonomous Drone Connectivity</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .feature-icon {
-      font-size: 50px;
-      margin-bottom: 20px;
-    }
-
-    .bg-custom {
-      background-color: #f8f9fa;
-    }
-
-    .footer {
-      background-color: #343a40;
-      color: white;
-      padding: 20px 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dronnayak - Empowering Autonomous Drone Connectivity</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
 </head>
-
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">Dronnayak</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#problem">Problem</a></li>
-          <li class="nav-item"><a class="nav-link" href="#solution">Solution</a></li>
-          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <div class="container">
-
-    <!-- Hero Section -->
-    <section class="hero py-5 mt-5">
-      <div class="row">
-        <div class="col-md-6">
-          <h1 class="display-4">Dronnayak</h1>
-          <p class="lead">"Empowering Autonomous Drone Connectivity"</p>
-          <p>Simplifying Drone Fleet Management and Application Deployment</p>
-          <a href="https://dashboard.dronnayak.com" class="btn btn-secondary">Get Started</a>
-        </div>
-        <div class="col-md-6 my-5 my-md-0">
-          <img src="images/Dronnayak.png" class="img-fluid" alt="">
-        </div>
-      </div>
-    </section>
-
-    <!-- Problem Statement Section -->
-    <section id="problem" class="py-5">
-      <div class="container">
-        <h2 class="text-center mb-4">The Problem</h2>
-        <div class="row align-items-center justify-content-center">
-          <div class="col">
-            <h4>Fragmented Solutions for Autonomous Drones</h4>
-            <p>Companies often struggle with ensuring 
-              <b>
-                reliable connectivity, deploying software updates, and monitoring drones
-              </b> 
-               without physically accessing the devices. 
-              This results in 
-              <b>
-                wasted time, higher operational costs, and inefficiencies
-              </b>
-              , especially for businesses relying on autonomous drones. 
-              The lack of a streamlined system for controlling multiple drones remotely makes scaling operations difficult 
-              and prevents businesses from realizing the full potential of their drones' capabilities.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Solution Section -->
-    <section id="solution" class="py-5 bg-custom">
-      <div class="container">
-        <h2 class="text-center mb-4">Our Solution</h2>
-        <div class="row align-items-center justify-content-center">
-          <div class="col">
-            <h4>A Unified Connectivity Platform for Autonomous Drones</h4>
-            <p>Dronnayak provides an all-in-one platform that enables 
-              <b>real-time drone connectivity. </b>Users can
-              <b>easily deploy</b> and update applications remotely,
-              <b>stream telemetry data, </b>and manage their drone fleets without needing physical access.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Value Proposition Section -->
-    <section id="value-proposition" class="py-5">
-      <div class="container">
-        <h2 class="text-center mb-4">Why Choose Dronnayak?</h2>
-        <p class="lead text-center">"Focus on Innovating Drones, We'll Handle the Connectivity"</p>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Streamline Operations: Effortlessly manage, monitor, and control your drone fleet.
-          </li>
-          <li class="list-group-item">Rapid AI Deployment: Easily deploy AI-driven or generic software that requires
-            frequent updates.</li>
-          <li class="list-group-item">Seamless Integration: A plug-and-play platform that integrates with existing drone
-            technology.</li>
-          <li class="list-group-item">Boost Efficiency: Reduce operational downtime and enable real-time decision-making
-            for autonomous operations.</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="py-5 bg-custom">
-      <div class="container">
-        <h2 class="text-center mb-4">Key Features</h2>
-        <div class="row text-center">
-          <div class="col-md-4">
-            <i class="bi bi-cloud feature-icon"></i>
-            <h4>Real-Time Connectivity</h4>
-            <p>Stream drone telemetry data to a central server.</p>
-          </div>
-          <div class="col-md-4">
-            <i class="bi bi-cpu feature-icon"></i>
-            <h4>Remote Software Deployment</h4>
-            <p>Deploy AI or other apps to drones remotely.</p>
-          </div>
-          <div class="col-md-4">
-            <i class="bi bi-gear feature-icon"></i>
-            <h4>Remote Monitoring & Control</h4>
-            <p>Monitor and control your drones remotely, reducing downtime and costs.</p>
-          </div>
-          <div class="col-md-6">
-            <i class="bi bi-gear feature-icon"></i>
-            <h4>Custom TCP Tunnels</h4>
-            <p>Open tunnels to ssh remotely or unique drone communication needs.</p>
-          </div>
-          <div class="col-md-6">
-            <i class="bi bi-gear feature-icon"></i>
-            <h4>Fleet Management</h4>
-            <p>Easily control, monitor, and manage drone fleets through a dashboard.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-5">
-      <div class="container">
-        <h2 class="text-center mb-4">About Dronnayak</h2>
-        <div class="row">
-          <div class="col-md-6">
-            <p>Dronnayak is a next-generation platform that simplifies connectivity and operational management for
-              autonomous drone manufacturers. Founded by <strong>Kunal Duran</strong>, a DGCA-certified drone pilot with
-              5
-              years of software development experience, the platform is designed to help autonomous drone manufacturers scale their
-              operations and focus on their core innovations.</p>
-            <p>Our team has built a Proof of Concept (POC) platform, now live, where users can add and monitor their
-              drones and logs. We are rapidly expanding features with a well-structured development pipeline.</p>
-          </div>
-          <div class="col-md-6">
-            <div class="d-flex justify-content-center">
-              <img src="images/profile_image.png" style="width: 250px;" class="img-fluid" alt="Founder Profile">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Dronnayak</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#problem">Problem</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#solution">Solution</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
             </div>
-          </div>
         </div>
-      </div>
+    </nav>
+
+    <header class="hero bg-primary text-white py-5 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="display-4">Dronnayak</h1>
+                    <p class="lead">"Empowering Autonomous Drone Connectivity"</p>
+                    <p>Simplifying Drone Fleet Management and Application Deployment</p>
+                    <a href="https://dashboard.dronnayak.com" class="btn btn-light btn-lg">Get Started</a>
+                </div>
+                <div class="col-md-6">
+                    <img src="https://images.unsplash.com/photo-1527977966376-1c8408f9f108?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Drone" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="problem" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">The Problem</h2>
+            <div class="card shadow">
+                <div class="card-body">
+                    <h4 class="card-title"><i class="bi bi-exclamation-triangle text-danger me-2"></i>Fragmented Solutions for Autonomous Drones</h4>
+                    <p class="card-text">
+                        Companies often struggle with ensuring 
+                        <strong>reliable connectivity, deploying software updates, and monitoring drones</strong> 
+                        without physically accessing the devices. 
+                        This results in 
+                        <strong>wasted time, higher operational costs, and inefficiencies</strong>, 
+                        especially for businesses relying on autonomous drones. 
+                        The lack of a streamlined system for controlling multiple drones remotely makes scaling operations difficult 
+                        and prevents businesses from realizing the full potential of their drones' capabilities.
+                    </p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Call to Action Section -->
-    <section id="contact" class="py-5 text-center">
-      <div class="container">
-        <h2 class="text-center mb-4">Get In Touch</h2>
-        <p>Are you ready to streamline your drone operations? Join us and revolutionize the future of autonomous drone
-          technology.</p>
-        <a href="mailto:kunalduran@gmail.com" class="btn btn-secondary">Contact Us Today</a>
-      </div>
-    </section>
-    <!-- Demo Video Section -->
-    <section id="demo" class="py-5 bg-custom text-center">
-      <div class="container">
-        <h2 class="text-center mb-4">Watch Our Demo</h2>
-        <p>See Dronnayak in action. Watch the video to understand how our platform empowers drone operations with
-          seamless connectivity and deployments.</p>
-        <div class="embed-responsive embed-responsive-16by9">
-          <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/hnzrDP0mqJY"
-            allowfullscreen></iframe>
+    <section id="solution" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Our Solution</h2>
+            <div class="card shadow">
+                <div class="card-body">
+                    <h4 class="card-title"><i class="bi bi-check-circle text-success me-2"></i>A Unified Connectivity Platform for Autonomous Drones</h4>
+                    <p class="card-text">
+                        Dronnayak provides an all-in-one platform that enables 
+                        <strong>real-time drone connectivity.</strong> Users can
+                        <strong>easily deploy</strong> and update applications remotely,
+                        <strong>stream telemetry data,</strong> and manage their drone fleets without needing physical access.
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-  </div>
-  <footer class="footer text-center">
-    <div class="container">
-      <p class="mb-0">© 2024 Dronnayak | All Rights Reserved</p>
-    </div>
-  </footer>
+    <section id="features" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Key Features</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow">
+                        <div class="card-body text-center">
+                            <i class="bi bi-cloud feature-icon"></i>
+                            <h4 class="card-title">Real-Time Connectivity</h4>
+                            <p class="card-text">Stream drone telemetry data to a central server.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow">
+                        <div class="card-body text-center">
+                            <i class="bi bi-cpu feature-icon"></i>
+                            <h4 class="card-title">Remote Software Deployment</h4>
+                            <p class="card-text">Deploy AI or other apps to drones remotely.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow">
+                        <div class="card-body text-center">
+                            <i class="bi bi-gear feature-icon"></i>
+                            <h4 class="card-title">Remote Monitoring & Control</h4>
+                            <p class="card-text">Monitor and control your drones remotely, reducing downtime and costs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">About Dronnayak</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p>
+                        Dronnayak is a next-generation platform that simplifies connectivity and operational management for
+                        autonomous drone manufacturers. Founded by <strong>Kunal Duran</strong>, a DGCA-certified drone pilot with
+                        5 years of software development experience, the platform is designed to help autonomous drone manufacturers scale their
+                        operations and focus on their core innovations.
+                    </p>
+                    <p>
+                        Our team has built a Proof of Concept (POC) platform, now live, where users can add and monitor their
+                        drones and logs. We are rapidly expanding features with a well-structured development pipeline.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="images/profile_image.png" alt="Founder Profile" class="img-fluid rounded-circle shadow" style="width: 250px; height: 250px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-5 bg-primary text-white">
+        <div class="container text-center">
+            <h2 class="mb-4">Get In Touch</h2>
+            <p class="lead mb-4">
+                Are you ready to streamline your drone operations? Join us and revolutionize the future of autonomous drone
+                technology.
+            </p>
+            <a href="mailto:kunalduran@gmail.com" class="btn btn-light btn-lg">
+                <i class="bi bi-envelope me-2"></i>Contact Us Today
+            </a>
+        </div>
+    </section>
+
+    <section id="demo" class="py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="mb-4">Watch Our Demo</h2>
+            <p class="lead mb-4">
+                See Dronnayak in action. Watch the video to understand how our platform empowers drone operations with
+                seamless connectivity and deployments.
+            </p>
+            <div class="ratio ratio-16x9 mb-4" style="max-width: 800px; margin: 0 auto;">
+                <iframe src="https://www.youtube.com/embed/hnzrDP0mqJY" title="Dronnayak Demo Video" allowfullscreen></iframe>
+            </div>
+            <a href="https://www.youtube.com/watch?v=hnzrDP0mqJY" target="_blank" rel="noopener noreferrer" class="btn btn-danger btn-lg">
+                <i class="bi bi-play-fill me-2"></i>Watch on YouTube
+            </a>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; 2024 Dronnayak | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
-
 </html>
