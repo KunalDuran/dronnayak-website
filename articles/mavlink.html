@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MAVLink Explained Simply</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      line-height: 1.8;
+    }
+    .section {
+      margin-bottom: 4rem;
+    }
+    .code-box {
+      background: #0d1117;
+      color: #c9d1d9;
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 0.9rem;
+    }
+    .analogy {
+      background: #fff3cd;
+      border-left: 6px solid #ffc107;
+      padding: 1rem;
+      border-radius: 6px;
+    }
+    .visual-box {
+      background: white;
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .arrow {
+      font-size: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container py-5">
+
+  <!-- Header -->
+  <div class="text-center mb-5">
+    <h1 class="fw-bold">MAVLink Protocol — Explained Simply</h1>
+    <p class="text-muted">
+      A beginner-friendly explanation of the MAVLink protocol.
+    </p>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section">
+    <h2>1. What is MAVLink?</h2>
+
+    <p>
+      MAVLink stands for <strong>Micro Air Vehicle Link</strong>.
+      It is a <strong>binary communication protocol</strong> used by drones and other unmanned systems
+      to talk to ground control stations.
+    </p>
+
+    <p class="fw-semibold">
+      MAVLink is basically the language drones use to talk.
+    </p>
+
+    <div class="analogy mt-3">
+      <strong>Analogy:</strong><br>
+      Just like humans use languages to communicate,
+      drones use MAVLink to communicate with ground stations.
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section">
+    <h2>2. Why Does MAVLink Exist?</h2>
+
+    <p>Drones operate in difficult environments:</p>
+    <ul>
+      <li>Low bandwidth telemetry radios</li>
+      <li>Noisy wireless links</li>
+      <li>Limited onboard computing power</li>
+    </ul>
+
+    <p>
+      Heavy formats like JSON or XML are not suitable here.
+      MAVLink was designed to be <strong>small, fast, and predictable</strong>.
+    </p>
+
+    <div class="analogy">
+      <strong>Analogy:</strong><br>
+      JSON is like speaking full English sentences on a walkie-talkie.<br>
+      MAVLink is like using short military codes.
+    </div>
+  </div>
+
+  <!-- Section 3: Visual Flow -->
+  <div class="section">
+    <h2>3. How MAVLink Communication Works</h2>
+
+    <div class="row align-items-center text-center">
+      <div class="col-md-5 visual-box">
+        <h5>Drone (Autopilot)</h5>
+        <p>Sends telemetry<br>(heartbeat, GPS, battery)</p>
+      </div>
+
+      <div class="col-md-2 arrow">⇄</div>
+
+      <div class="col-md-5 visual-box">
+        <h5>Ground Control Station</h5>
+        <p>Sends commands<br>(arm, takeoff, land)</p>
+      </div>
+    </div>
+
+    <p class="mt-4">
+      MAVLink communication is <strong>bi-directional</strong>.
+      Both sides continuously exchange messages.
+    </p>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="section">
+    <h2>4. Binary Serialization (Core Idea)</h2>
+
+    <p>
+      MAVLink uses <strong>binary serialization</strong>.
+      This means data is converted into raw bytes before sending.
+    </p>
+
+    <p><strong>Conceptual example:</strong></p>
+
+    <div class="code-box">
+      HEARTBEAT<br>
+      system_id = 1<br>
+      armed = true<br>
+      mode = AUTO
+    </div>
+
+    <p class="mt-3">
+      Instead of sending text, MAVLink sends fixed-position bytes.
+      The receiver already knows how to decode them.
+    </p>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="section">
+    <h2>5. MAVLink v1 Message Structure</h2>
+
+    <div class="code-box text-center">
+      STX | LEN | SEQ | SYS ID | COMP ID | MSG ID | PAYLOAD | CHECKSUM
+    </div>
+
+    <ul class="mt-3">
+      <li><strong>STX</strong> – Start of frame</li>
+      <li><strong>LEN</strong> – Payload size</li>
+      <li><strong>SEQ</strong> – Detects packet loss</li>
+      <li><strong>SYS / COMP ID</strong> – Who sent it</li>
+      <li><strong>MSG ID</strong> – What type of message</li>
+      <li><strong>PAYLOAD</strong> – Actual data</li>
+      <li><strong>CHECKSUM</strong> – Error detection</li>
+    </ul>
+
+    <div class="analogy">
+      <strong>Analogy:</strong><br>
+      This is like an envelope with sender, receiver, message type,
+      letter inside, and a tamper seal.
+    </div>
+  </div>
+
+  <!-- Section 6 -->
+  <div class="section">
+    <h2>6. MAVLink v2 — What Improved?</h2>
+
+    <ul>
+      <li>Larger message ID space</li>
+      <li>Compatibility flags</li>
+      <li>Optional message signing</li>
+      <li>Better security support</li>
+    </ul>
+
+    <div class="analogy">
+      <strong>Analogy:</strong><br>
+      MAVLink v2 is like HTTPS compared to HTTP — same idea, safer.
+    </div>
+  </div>
+
+  <!-- Section 7 -->
+  <div class="section">
+    <h2>7. MAVLink Message Types</h2>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="visual-box">
+          <h5>State Messages</h5>
+          <p>Drone → Ground Station</p>
+          <ul class="text-start">
+            <li>Heartbeat</li>
+            <li>GPS position</li>
+            <li>Battery status</li>
+            <li>Altitude</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="visual-box">
+          <h5>Command Messages</h5>
+          <p>Ground Station → Drone</p>
+          <ul class="text-start">
+            <li>Arm / Disarm</li>
+            <li>Takeoff</li>
+            <li>Land</li>
+            <li>Waypoint navigation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 8: Comparison -->
+  <div class="section">
+    <h2>8. MAVLink vs JSON (Very Important)</h2>
+
+    <p>
+      MAVLink is designed for limited-bandwidth environments.
+      JSON is designed for readability and flexibility.
+    </p>
+
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Aspect</th>
+          <th>MAVLink</th>
+          <th>JSON</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Encoding</td>
+          <td>Binary</td>
+          <td>Text</td>
+        </tr>
+        <tr>
+          <td>Typical HEARTBEAT size</td>
+          <td>~17 bytes</td>
+          <td>Much larger (variable)</td>
+        </tr>
+        <tr>
+          <td>Parsing</td>
+          <td>Deterministic</td>
+          <td>Text parsing</td>
+        </tr>
+        <tr>
+          <td>Best use</td>
+          <td>Drones, telemetry</td>
+          <td>Web & cloud APIs</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="analogy">
+      <strong>Key takeaway:</strong><br>
+      MAVLink is not better than JSON — it is better suited for drones.
+    </div>
+  </div>
+
+  <!-- Section 9 -->
+  <div class="section">
+    <h2>Summary</h2>
+
+    <ul>
+      <li>MAVLink = fixed binary messages</li>
+      <li>Header = who & what</li>
+      <li>Payload = data</li>
+      <li>Checksum = safety</li>
+    </ul>
+
+
+  </div>
+
+</div>
+
+</body>
+</html>
