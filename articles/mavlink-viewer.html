@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAVLink Message Builder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1em;
+        }
+
+        .version-tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .version-tab {
+            padding: 10px 24px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: all 0.2s;
+            color: #555;
+        }
+
+        .version-tab.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .version-tab:hover:not(.active) {
+            border-color: #3498db;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .frame-title {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 24px;
+            color: #2c3e50;
+        }
+
+        .frame-container {
+            display: flex;
+            border: 2px solid #2c3e50;
+            border-radius: 8px;
+            overflow: visible;
+            margin-bottom: 8px;
+        }
+
+        .frame-field {
+            flex: 1;
+            padding: 20px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            font-weight: 500;
+            font-size: 0.9em;
+            overflow: visible;
+        }
+
+        .frame-field:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        .frame-field.stx { background: #e74c3c; color: white; }
+        .frame-field.len { background: #3498db; color: white; }
+        .frame-field.seq { background: #1abc9c; color: white; }
+        .frame-field.sysid { background: #f39c12; color: white; }
+        .frame-field.compid { background: #e67e22; color: white; }
+        .frame-field.msgid { background: #16a085; color: white; }
+        .frame-field.payload { background: #95a5a6; color: white; flex: 3; }
+        .frame-field.checksum { background: #27ae60; color: white; }
+        .frame-field.incompat { background: #d35400; color: white; }
+        .frame-field.compat { background: #c0392b; color: white; }
+        .frame-field.msgid-v2 { background: #16a085; color: white; }
+
+        .field-bytes {
+            font-size: 0.75em;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        .field-tooltip {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c3e50;
+            color: white;
+            padding: 12px 14px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            width: 240px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 10000;
+            text-align: left;
+            font-weight: normal;
+            pointer-events: none;
+            line-height: 1.5;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .field-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 7px solid transparent;
+            border-top-color: #2c3e50;
+        }
+
+        .frame-field:hover .field-tooltip {
+            opacity: 1;
+            visibility: visible;
+            bottom: calc(100% + 12px);
+        }
+
+        .frame-note {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.85em;
+            margin-top: 8px;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .control-item label {
+            display: block;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 0.95em;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .payload-item {
+            grid-column: 1 / -1;
+        }
+
+        .generate-btn {
+            background: #3498db;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 24px;
+            transition: background 0.2s;
+        }
+
+        .generate-btn:hover {
+            background: #2980b9;
+        }
+
+        .output-box {
+            background: #2c3e50;
+            color: #2ecc71;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.8;
+        }
+
+        .output-label {
+            color: #ecf0f1;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .byte-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .byte-box {
+            background: #34495e;
+            border: 1px solid #2ecc71;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .byte-label {
+            font-size: 0.7em;
+            color: #95a5a6;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .version-content {
+            display: none;
+        }
+
+        .version-content.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MAVLink Message Builder</h1>
+            <p>Interactive frame structure and message generator</p>
+        </div>
+
+        <div class="version-tabs">
+            <button class="version-tab" id="v1-tab" onclick="switchVersion('v1', event)">MAVLink 1.0</button>
+            <button class="version-tab active" id="v2-tab" onclick="switchVersion('v2', event)">MAVLink 2.0</button>
+        </div>
+
+        <!-- MAVLink 1.0 -->
+        <div id="v1-content" class="version-content">
+            <div class="card">
+                <div class="frame-title">MAVLink v1 Frame Structure (8 - 263 bytes)</div>
+                
+                <div class="frame-container">
+                    <div class="frame-field stx">
+                        <div>STX</div>
+                        <div class="field-bytes">1 byte</div>
+                        <div class="field-tooltip">Start marker (0xFE). Marks the beginning of a MAVLink v1 message.</div>
+                    </div>
+                    <div class="frame-field len">
+                        <div>LEN</div>
+                        <div class="field-bytes">1 byte</div>
+                        <div class="field-tooltip">Payload length (0-255). Number of bytes in the message data.</div>
+                    </div>
+                    <div class="frame-field seq">
+                        <div>SEQ</div>
+                        <div class="field-bytes">1 byte</div>
+                        <div class="field-tooltip">Sequence number (0-255). Counts each message sent.</div>
+                    </div>
+                    <div class="frame-field sysid">
+                        <div>SYS ID</div>
+                        <div class="field-bytes">1 byte</div>
+                        <div class="field-tooltip">System ID. Identifies which device is sending.</div>
+                    </div>
+                    <div class="frame-field compid">
+                        <div>COMP ID</div>
+                        <div class="field-bytes">1 byte</div>
+                        <div class="field-tooltip">Component ID. Identifies which part of the system.</div>
+                    </div>
+                    <div class="frame-field msgid">
+                        <div>MSG ID</div>
+                        <div class="field-bytes">1 byte</div>
+                        <div class="field-tooltip">Message ID (0-255). Defines message type.</div>
+                    </div>
+                    <div class="frame-field payload">
+                        <div>PAYLOAD</div>
+                        <div class="field-bytes">0-255 bytes</div>
+                        <div class="field-tooltip">The actual message data. Content varies by message type.</div>
+                    </div>
+                    <div class="frame-field checksum">
+                        <div>CRC</div>
+                        <div class="field-bytes">2 bytes</div>
+                        <div class="field-tooltip">Checksum for error detection. Verifies message integrity.</div>
+                    </div>
+                </div>
+                <div class="frame-note">Hover over fields to see descriptions</div>
+            </div>
+        </div>
+
+        <!-- MAVLink 2.0 -->
+        <div id="v2-content" class="version-content active">
+            <div class="card">
+                <div class="frame-title">MAVLink v2 Frame Structure (12 - 280 bytes)</div>
+                
+                <div class="frame-container">
+                    <div class="frame-field stx">
+                        <div>STX</div>
+                        <div class="field-bytes">1 byte</div>
+                        <div class="field-tooltip">Start marker (0xFD). Marks the beginning of a MAVLink v2 message.</div>
+                    </div>
+                    <div class="frame-field len">
+                        <div>LEN</div>
+                        <div class="field-bytes">1 byte</div>
+                        <div class="field-tooltip">Payload length (0-255). Number of bytes in the message data.</div>
+                    </div>
+                    <div class="frame-field incompat">
+                        <div>INC</div>
+                        <div class="field-bytes">1 byte</div>
+                        <div class="field-tooltip">Incompatibility flags. Features that v1 cannot understand.</div>
+                    </div>
+                    <div class="frame-field compat">
+                        <div>COM</div>
+                        <div class="field-bytes">1 byte</div>
+                        <div class="field-tooltip">Compatibility flags. Features that v1 can safely ignore.</div>
+                    </div>
+                    <div class="frame-field seq">
+                        <div>SEQ</div>
+                        <div class="field-bytes">1 byte</div>
+                        <div class="field-tooltip">Sequence number (0-255). Counts each message sent.</div>
+                    </div>
+                    <div class="frame-field sysid">
+                        <div>SYS ID</div>
+                        <div class="field-bytes">1 byte</div>
+                        <div class="field-tooltip">System ID. Identifies which device is sending.</div>
+                    </div>
+                    <div class="frame-field compid">
+                        <div>COMP ID</div>
+                        <div class="field-bytes">1 byte</div>
+                        <div class="field-tooltip">Component ID. Identifies which part of the system.</div>
+                    </div>
+                    <div class="frame-field msgid-v2">
+                        <div>MSG ID</div>
+                        <div class="field-bytes">3 bytes</div>
+                        <div class="field-tooltip">Message ID (0-16M). Defines message type - now with extended range.</div>
+                    </div>
+                    <div class="frame-field payload">
+                        <div>PAYLOAD</div>
+                        <div class="field-bytes">0-255 bytes</div>
+                        <div class="field-tooltip">The actual message data. Content varies by message type.</div>
+                    </div>
+                    <div class="frame-field checksum">
+                        <div>CRC</div>
+                        <div class="field-bytes">2 bytes</div>
+                        <div class="field-tooltip">Checksum for error detection. Verifies message integrity.</div>
+                    </div>
+                </div>
+                <div class="frame-note">Hover over fields to see descriptions</div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="card">
+            <div class="section-title">Message Configuration</div>
+            
+            <div class="controls-grid">
+                <div class="control-item">
+                    <label>Start Marker (STX)</label>
+                    <select id="stx">
+                        <option value="FD">0xFD (MAVLink 2.0)</option>
+                        <option value="FE">0xFE (MAVLink 1.0)</option>
+                    </select>
+                </div>
+
+                <div class="control-item">
+                    <label>Payload Length</label>
+                    <input type="number" id="payload_len" min="0" max="255" value="6">
+                </div>
+
+                <div class="control-item">
+                    <label>Incompatibility Flags</label>
+                    <input type="number" id="incompat_flags" min="0" max="255" value="0">
+                </div>
+
+                <div class="control-item">
+                    <label>Compatibility Flags</label>
+                    <input type="number" id="compat_flags" min="0" max="255" value="0">
+                </div>
+
+                <div class="control-item">
+                    <label>Sequence Number</label>
+                    <input type="number" id="seq" min="0" max="255" value="0">
+                </div>
+
+                <div class="control-item">
+                    <label>System ID</label>
+                    <select id="sysid">
+                        <option value="1">1 - Drone/Vehicle</option>
+                        <option value="255">255 - Ground Station</option>
+                        <option value="2">2 - Second Drone</option>
+                        <option value="custom">Custom...</option>
+                    </select>
+                </div>
+
+                <div class="control-item">
+                    <label>Component ID</label>
+                    <select id="compid">
+                        <option value="1">1 - Flight Controller</option>
+                        <option value="100">100 - Camera</option>
+                        <option value="190">190 - Gimbal</option>
+                        <option value="custom">Custom...</option>
+                    </select>
+                </div>
+
+                <div class="control-item">
+                    <label>Message ID</label>
+                    <select id="msgid">
+                        <option value="0">0 - HEARTBEAT</option>
+                        <option value="30">30 - ATTITUDE</option>
+                        <option value="33">33 - GLOBAL_POSITION_INT</option>
+                        <option value="74">74 - VFR_HUD</option>
+                        <option value="custom">Custom...</option>
+                    </select>
+                </div>
+
+                <div class="control-item payload-item">
+                    <label>Payload (Hex bytes, space-separated)</label>
+                    <input type="text" id="payload" placeholder="05 00 00 00 03 00" value="05 00 00 00 03 00">
+                </div>
+            </div>
+
+            <button class="generate-btn" onclick="generateMessage()">Generate Message</button>
+        </div>
+
+        <!-- Output -->
+        <div class="card">
+            <div class="section-title">Generated Message</div>
+            <div class="output-box">
+                <div class="output-label">Hex Output:</div>
+                <div id="hex-output">Click "Generate Message" to create your MAVLink packet</div>
+                <div class="byte-row" id="visual-packet"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentVersion = 'v2';
+
+        function switchVersion(version, event) {
+            currentVersion = version;
+            document.querySelectorAll('.version-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.version-tab').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(`${version}-content`).classList.add('active');
+            if (event) {
+                event.target.classList.add('active');
+            }
+        }
+
+        function calculateChecksum(bytes) {
+            let crc = 0xFFFF;
+            
+            for (let i = 1; i < bytes.length; i++) {
+                let tmp = bytes[i] ^ (crc & 0xFF);
+                tmp ^= (tmp << 4) & 0xFF;
+                crc = ((crc >> 8) ^ (tmp << 8) ^ (tmp << 3) ^ (tmp >> 4)) & 0xFFFF;
+            }
+            
+            return crc;
+        }
+
+        function generateMessage() {
+            try {
+                const stx = parseInt(document.getElementById('stx').value, 16);
+                const payloadLen = parseInt(document.getElementById('payload_len').value);
+                const incompatFlags = parseInt(document.getElementById('incompat_flags').value);
+                const compatFlags = parseInt(document.getElementById('compat_flags').value);
+                const seq = parseInt(document.getElementById('seq').value);
+                
+                let sysid = document.getElementById('sysid').value;
+                if (sysid === 'custom') {
+                    sysid = parseInt(prompt('Enter custom System ID (0-255):') || '1');
+                } else {
+                    sysid = parseInt(sysid);
+                }
+                
+                let compid = document.getElementById('compid').value;
+                if (compid === 'custom') {
+                    compid = parseInt(prompt('Enter custom Component ID (0-255):') || '1');
+                } else {
+                    compid = parseInt(compid);
+                }
+                
+                let msgid = document.getElementById('msgid').value;
+                if (msgid === 'custom') {
+                    msgid = parseInt(prompt('Enter custom Message ID (0-16777215):') || '0');
+                } else {
+                    msgid = parseInt(msgid);
+                }
+
+                const payloadStr = document.getElementById('payload').value.trim();
+                const payloadBytes = payloadStr ? payloadStr.split(/\s+/).map(b => parseInt(b, 16)) : [];
+
+                const msgidBytes = [
+                    msgid & 0xFF,
+                    (msgid >> 8) & 0xFF,
+                    (msgid >> 16) & 0xFF
+                ];
+
+                let message = [
+                    stx,
+                    payloadLen,
+                    incompatFlags,
+                    compatFlags,
+                    seq,
+                    sysid,
+                    compid,
+                    ...msgidBytes,
+                    ...payloadBytes
+                ];
+
+                const crc = calculateChecksum(message);
+                const crcLow = crc & 0xFF;
+                const crcHigh = (crc >> 8) & 0xFF;
+                
+                message.push(crcLow, crcHigh);
+
+                const hexString = message.map(b => b.toString(16).toUpperCase().padStart(2, '0')).join(' ');
+                
+                document.getElementById('hex-output').innerHTML = `
+                    ${hexString}<br><br>
+                    Length: ${message.length} bytes | Checksum: 0x${crc.toString(16).toUpperCase().padStart(4, '0')}
+                `;
+
+                const visualPacket = document.getElementById('visual-packet');
+                visualPacket.innerHTML = '';
+                
+                const labels = [
+                    'STX', 'LEN', 'INC', 'COM', 'SEQ', 'SYS', 'CMP', 
+                    'MSG', 'MSG', 'MSG', 
+                    ...Array(payloadBytes.length).fill('PAY'),
+                    'CRC', 'CRC'
+                ];
+
+                message.forEach((byte, idx) => {
+                    const box = document.createElement('div');
+                    box.className = 'byte-box';
+                    box.innerHTML = `
+                        <span class="byte-label">${labels[idx]}</span>
+                        0x${byte.toString(16).toUpperCase().padStart(2, '0')}
+                    `;
+                    visualPacket.appendChild(box);
+                });
+
+            } catch (error) {
+                document.getElementById('hex-output').innerHTML = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
