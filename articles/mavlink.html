@@ -86,16 +86,6 @@
       <li>Limited onboard computing power</li>
     </ul>
 
-    <p>
-      Heavy formats like JSON or XML are not suitable here.
-      MAVLink was designed to be <strong>small, fast, and predictable</strong>.
-    </p>
-
-    <div class="analogy">
-      <strong>Analogy:</strong><br>
-      JSON is like speaking full English sentences on a walkie-talkie.<br>
-      MAVLink is like using short military codes.
-    </div>
   </div>
 
   <!-- Section 3: Visual Flow -->
@@ -221,54 +211,6 @@
     </div>
   </div>
 
-  <!-- Section 8: Comparison -->
-  <div class="section">
-    <h2>8. MAVLink vs JSON (Very Important)</h2>
-
-    <p>
-      MAVLink is designed for limited-bandwidth environments.
-      JSON is designed for readability and flexibility.
-    </p>
-
-    <table class="table table-bordered">
-      <thead class="table-light">
-        <tr>
-          <th>Aspect</th>
-          <th>MAVLink</th>
-          <th>JSON</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Encoding</td>
-          <td>Binary</td>
-          <td>Text</td>
-        </tr>
-        <tr>
-          <td>Typical HEARTBEAT size</td>
-          <td>~17 bytes</td>
-          <td>Much larger (variable)</td>
-        </tr>
-        <tr>
-          <td>Parsing</td>
-          <td>Deterministic</td>
-          <td>Text parsing</td>
-        </tr>
-        <tr>
-          <td>Best use</td>
-          <td>Drones, telemetry</td>
-          <td>Web & cloud APIs</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="analogy">
-      <strong>Key takeaway:</strong><br>
-      MAVLink is not better than JSON — it is better suited for drones.
-    </div>
-  </div>
-
-  <!-- Section 9 -->
   <div class="section">
     <h2>Summary</h2>
 
