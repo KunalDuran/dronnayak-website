@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dronnayak - Enterprise Drone Connectivity Platform</title>
+  <title>Dronnayak — Drone Connectivity Platform</title>
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
   <style>
-    /* Minimal styling Bootstrap doesn't cover */
+    body {
+      font-feature-settings: "ss01";
+    }
+
     .hero-bg {
       background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     }
@@ -24,17 +26,28 @@
     .hover-white:hover {
       color: #fff !important;
     }
-  </style>
 
+    .card-hover {
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08) !important;
+    }
+
+    .navbar-brand .brand-accent {
+      color: #0d6efd;
+    }
+  </style>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
     <div class="container">
-      <a class="navbar-brand fw-bold fs-4 text-primary" href="/">
-        <i class="bi bi-drone me-2"></i>Dronnayak
+      <a class="navbar-brand fw-bold fs-4" href="/">
+        <i class="bi bi-drone me-2 brand-accent"></i>Dronnayak
       </a>
-
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -43,20 +56,22 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="#solution">Platform</a></li>
-          <li class="nav-item"><a class="nav-link" href="#use-cases">Use Cases</a></li>
+          <li class="nav-item"><a class="nav-link" href="#problem">Why</a></li>
           <li class="nav-item"><a class="nav-link" href="#technology">Technology</a></li>
           <li class="nav-item">
             <a class="nav-link" href="https://github.com/KunalDuran/dronnayak-core" target="_blank">GitHub</a>
           </li>
           <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
-            <a class="btn btn-primary" href="/login">Get Started</a>
+            <a class="btn btn-dark" href="https://github.com/KunalDuran/dronnayak-core" target="_blank">
+              <i class="bi bi-github me-2"></i>View on GitHub
+            </a>
           </li>
         </ul>
       </div>
-
-
     </div>
   </nav>
+
+  <!-- HERO -->
   <section class="hero-bg py-4 py-md-5">
     <div class="container py-3 py-md-5">
       <div class="row align-items-center g-4 g-lg-5">
@@ -66,80 +81,64 @@
           </h1>
 
           <p class="lead text-muted mb-4">
-            Connect, monitor, and manage your autonomous drone fleet with real-time telemetry,
-            edge deployment, and enterprise-grade reliability.
+            Connectivity infrastructure for autonomous drones — telemetry transport,
+            remote access, and edge deployment — so your team focuses on the application,
+            not the pipeline.
           </p>
+
           <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start mb-4">
-            <a href="https://dashboard.dronnayak.com" class="btn btn-primary btn-lg w-100 w-sm-auto">
+            <a href="https://dashboard.dronnayak.com"
+               class="btn btn-dark btn-lg w-100 w-sm-auto" target="_blank">
               <i class="bi bi-rocket-takeoff me-2"></i>
-              Start Free Trial
+              View Dashboard
             </a>
+            
             <a href="https://youtu.be/BGpi7l1ln9g?si=XLFqY7jotTpf6br8"
-              class="btn btn-outline-primary btn-lg w-100 w-sm-auto">
+              class="btn btn-outline-dark btn-lg w-100 w-sm-auto" target="_blank">
               <i class="bi bi-play-circle me-2"></i>
               Watch Demo
             </a>
           </div>
-
-          <div class="row text-center text-lg-start gy-3">
-            <div class="col-4">
-              <h3 class="fw-bold text-primary mb-1">99.9%</h3>
-              <p class="text-muted small mb-0">Uptime SLA</p>
-            </div>
-
-            <div class="col-4">
-              <h3 class="fw-bold text-primary mb-1">&lt;100ms</h3>
-              <p class="text-muted small mb-0">Latency</p>
-            </div>
-
-            <div class="col-4">
-              <h3 class="fw-bold text-primary mb-1">24/7</h3>
-              <p class="text-muted small mb-0">Monitoring</p>
-            </div>
-
-          </div>
-
         </div>
 
         <div class="col-lg-5 order-1 order-lg-2 text-center">
           <img src="images/dronnayak-preview.webp" alt="Dronnayak dashboard preview"
             class="img-fluid rounded shadow w-100" style="max-width: 520px;">
         </div>
-
       </div>
-
     </div>
-
   </section>
 
+  <!-- WHY / PROBLEM -->
   <section class="py-5" id="problem">
     <div class="container py-4">
       <div class="text-center mb-5">
-        <h2 class="fw-bold mb-3">The Drone Connectivity Challenge</h2>
-        <p class="lead text-muted">Current drone operations face critical infrastructure gaps</p>
+        <h2 class="fw-bold mb-3">Why Dronnayak</h2>
+        <p class="lead text-muted">Drone teams keep rebuilding the same plumbing.</p>
       </div>
       <div class="row g-4">
         <div class="col-md-4">
-          <div class="card h-100 border shadow-sm">
+          <div class="card h-100 border shadow-sm card-hover">
             <div class="card-body p-4">
               <div class="icon-box bg-primary-subtle rounded d-flex align-items-center justify-content-center mb-3">
-                <i class="bi bi-wifi-off fs-3 text-primary"></i>
+                <i class="bi bi-wifi-off fs-3 brand-accent"></i>
               </div>
-              <h5 class="fw-bold">Limited Connectivity</h5>
+              <h5 class="fw-bold">Fragile connectivity</h5>
               <p class="text-muted mb-0">
-                Traditional radio links restrict operational range and create telemetry blind spots.
+                Cellular links drop, NAT breaks things, and telemetry pipelines built in-house
+                rarely survive contact with the field.
               </p>
             </div>
           </div>
         </div>
 
         <div class="col-md-4">
-          <div class="card h-100 border shadow-sm">
+          <div class="card h-100 border shadow-sm card-hover">
             <div class="card-body p-4">
               <div class="icon-box bg-primary-subtle rounded d-flex align-items-center justify-content-center mb-3">
-                <i class="bi bi-eye-slash fs-3 text-primary"></i>
+                <i class="bi bi-eye-slash fs-3 brand-accent"></i>
               </div>
-              <h5 class="fw-bold">Poor Observability</h5>
+              <h5 class="fw-bold">Limited observability</h5>
               <p class="text-muted mb-0">
                 Lack of real-time insights increases operational risk.
               </p>
@@ -148,10 +147,10 @@
         </div>
 
         <div class="col-md-4">
-          <div class="card h-100 border shadow-sm">
+          <div class="card h-100 border shadow-sm card-hover">
             <div class="card-body p-4">
               <div class="icon-box bg-primary-subtle rounded d-flex align-items-center justify-content-center mb-3">
-                <i class="bi bi-gear-wide-connected fs-3 text-primary"></i>
+                <i class="bi bi-gear-wide-connected fs-3 brand-accent"></i>
               </div>
               <h5 class="fw-bold">Complex Integration</h5>
               <p class="text-muted mb-0">
@@ -164,53 +163,54 @@
     </div>
   </section>
 
+  <!-- SOLUTION / PLATFORM -->
   <section class="py-5 bg-light" id="solution">
     <div class="container py-4">
       <div class="text-center mb-5">
-        <h2 class="fw-bold mb-3">Enterprise-Grade Drone Infrastructure</h2>
-        <p class="lead text-muted">Built for scale and reliability</p>
+        <h2 class="fw-bold mb-3">What the platform does</h2>
+        <p class="lead text-muted">Connectivity as infrastructure, not a side project.</p>
       </div>
       <div class="row g-4">
         <div class="col-md-6 col-lg-3">
-          <div class="card h-100 shadow-sm">
+          <div class="card h-100 shadow-sm card-hover">
             <div class="card-body p-4">
-              <i class="bi bi-broadcast fs-2 text-primary mb-3"></i>
-              <h6 class="fw-bold">Real-Time Telemetry</h6>
+              <i class="bi bi-broadcast fs-2 brand-accent mb-3"></i>
+              <h6 class="fw-bold">Real-time telemetry</h6>
               <p class="text-muted small mb-0">
-                Stream MAVLink data with ultra-low latency.
+                Stream MAVLink from Pixhawk to the cloud over reliable, reconnecting channels.
               </p>
             </div>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
-          <div class="card h-100 shadow-sm">
+          <div class="card h-100 shadow-sm card-hover">
             <div class="card-body p-4">
-              <i class="bi bi-collection fs-2 text-primary mb-3"></i>
-              <h6 class="fw-bold">Fleet Management</h6>
+              <i class="bi bi-collection fs-2 brand-accent mb-3"></i>
+              <h6 class="fw-bold">Fleet management</h6>
               <p class="text-muted small mb-0">
-                Unified dashboard for multi-drone operations.
+                A unified dashboard for multi-drone operations, with session and access control.
               </p>
             </div>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
-          <div class="card h-100 shadow-sm">
+          <div class="card h-100 shadow-sm card-hover">
             <div class="card-body p-4">
-              <i class="bi bi-code-square fs-2 text-primary mb-3"></i>
-              <h6 class="fw-bold">Edge Deployment</h6>
+              <i class="bi bi-code-square fs-2 brand-accent mb-3"></i>
+              <h6 class="fw-bold">Edge deployment</h6>
               <p class="text-muted small mb-0">
-                Deploy apps remotely to companion computers.
+                Push containers or binaries to companion computers in the field, with rollback.
               </p>
             </div>
           </div>
         </div>
         <div class="col-md-6 col-lg-3">
-          <div class="card h-100 shadow-sm">
+          <div class="card h-100 shadow-sm card-hover">
             <div class="card-body p-4">
-              <i class="bi bi-shield-check fs-2 text-primary mb-3"></i>
+              <i class="bi bi-shield-check fs-2 brand-accent mb-3"></i>
               <h6 class="fw-bold">Security</h6>
               <p class="text-muted small mb-0">
-                Encryption and role-based access control.
+                Encrypted transport and role-based access for operators, developers, and viewers.
               </p>
             </div>
           </div>
@@ -219,49 +219,57 @@
     </div>
   </section>
 
+  <!-- TECHNOLOGY -->
   <section class="py-5" id="technology">
     <div class="container text-center py-4">
-      <h2 class="fw-bold mb-3">Built on Production-Ready Technology</h2>
-      <p class="lead text-muted mb-4">Open standards and enterprise infrastructure</p>
+      <h2 class="fw-bold mb-3">Built on</h2>
+      <p class="lead text-muted mb-4">Open standards and proven building blocks.</p>
 
       <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
-        <span class="badge bg-light text-dark border">MAVLink</span>
+        <span class="badge bg-light text-dark border">Go</span>
+        <span class="badge bg-light text-dark border">MAVLink v2</span>
         <span class="badge bg-light text-dark border">PX4</span>
         <span class="badge bg-light text-dark border">ArduPilot</span>
+        <span class="badge bg-light text-dark border">Pixhawk</span>
+        <span class="badge bg-light text-dark border">Raspberry Pi</span>
+        <span class="badge bg-light text-dark border">Jetson</span>
         <span class="badge bg-light text-dark border">WebSocket</span>
         <span class="badge bg-light text-dark border">PostgreSQL</span>
-        <span class="badge bg-light text-dark border">Go</span>
         <span class="badge bg-light text-dark border">Docker</span>
       </div>
 
-      <a href="https://github.com/KunalDuran/dronnayak-core" class="btn btn-outline-primary btn-lg" target="_blank">
+      <a href="https://github.com/KunalDuran/dronnayak-core" class="btn btn-outline-dark btn-lg" target="_blank">
         <i class="bi bi-github me-2"></i>View on GitHub
       </a>
-
-
     </div>
   </section>
 
-  <section class="bg-primary text-white py-5">
+  <!-- GET INVOLVED -->
+  <section class="bg-dark text-white py-5">
     <div class="container text-center py-4">
-      <h2 class="fw-bold mb-3">Ready to Scale Your Drone Operations?</h2>
-      <p class="lead mb-4">
-        Join companies building the future of autonomous flight
+      <h2 class="fw-bold mb-3">Get involved</h2>
+      <p class="lead mb-4 text-white-50">
+        Built in the open. Feedback, critique, and collaboration welcome.
       </p>
       <div class="d-flex flex-wrap justify-content-center gap-3">
-        <a href="https://dashboard.dronnayak.com" class="btn btn-light btn-lg" target="_blank">Start Free Trial</a>
-        <a href="mailto:kunalduran@gmail.com" class="btn btn-outline-light btn-lg">Contact Sales</a>
+        <a href="https://github.com/KunalDuran/dronnayak-core" class="btn btn-light btn-lg" target="_blank">
+          <i class="bi bi-github me-2"></i>Explore the code
+        </a>
+        <a href="mailto:kunalduran@gmail.com" class="btn btn-outline-light btn-lg">
+          <i class="bi bi-envelope me-2"></i>Contact
+        </a>
       </div>
     </div>
   </section>
 
-  <footer class="bg-dark text-secondary py-5">
+  <!-- FOOTER -->
+  <footer class="bg-dark text-secondary py-5 border-top border-secondary">
     <div class="container">
       <div class="row gy-4 align-items-center">
         <div class="col-md-6 text-center text-md-start">
           <h5 class="text-white fw-bold mb-2">Dronnayak</h5>
           <p class="small mb-3">
-            Drone connectivity platform for autonomous operations
+            Connectivity infrastructure for autonomous drones.
           </p>
           <div class="d-flex justify-content-center justify-content-md-start gap-3 fs-5">
             <a href="https://github.com/KunalDuran/dronnayak-core" target="_blank" class="text-secondary hover-white">
@@ -270,7 +278,6 @@
             <a href="https://x.com/duran_kunal" target="_blank" class="text-secondary hover-white">
               <i class="bi bi-twitter-x"></i>
             </a>
-
             <a href="https://www.youtube.com/@kunalduran4494" target="_blank" class="text-secondary hover-white">
               <i class="bi bi-youtube"></i>
             </a>
@@ -282,7 +289,7 @@
 
         <div class="col-md-6 text-center text-md-end">
           <p class="small mb-1">
-            © 2024 Dronnayak
+            © 2026 Dronnayak
           </p>
           <p class="small mb-0">
             Built in India 🇮🇳
@@ -293,6 +300,6 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
 </body>
+
 </html>
