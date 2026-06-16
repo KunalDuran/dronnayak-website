@@ -279,6 +279,130 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.02); }
         }
+
+        .card-subtitle {
+            color: #7f8c8d;
+            font-size: 0.88em;
+            margin-bottom: 18px;
+        }
+
+        .decode-btn { background: #16a085; }
+        .decode-btn:hover { background: #1a8870; }
+
+        .decode-summary {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .decode-badge {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .decode-badge.v1 { background: #e74c3c; color: white; }
+        .decode-badge.v2 { background: #3498db; color: white; }
+        .decode-badge.unknown { background: #95a5a6; color: white; }
+
+        .decode-msgname {
+            font-size: 1.15em;
+            font-weight: 700;
+            color: #ecf0f1;
+        }
+
+        .decode-meta {
+            font-size: 0.82em;
+            color: #95a5a6;
+            margin-left: auto;
+        }
+
+        .decode-msg-desc {
+            background: rgba(52,152,219,0.15);
+            border-left: 4px solid #3498db;
+            padding: 9px 13px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            font-size: 0.85em;
+            color: #bdc3c7;
+        }
+
+        .decode-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 0.85em;
+        }
+
+        .decode-table th {
+            background: #1a252f;
+            color: #bdc3c7;
+            padding: 9px 12px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .decode-table td {
+            padding: 7px 12px;
+            border-bottom: 1px solid #3d5166;
+            vertical-align: middle;
+        }
+
+        .decode-table tr:hover td { background: rgba(255,255,255,0.04); }
+
+        .field-name {
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            font-size: 0.88em;
+            border-left: 3px solid transparent;
+            padding-left: 9px !important;
+        }
+
+        .field-hex { font-family: 'Courier New', monospace; color: #7f9db5; font-size: 0.82em; }
+        .field-value { font-weight: 500; color: #2ecc71; }
+        .field-desc { color: #7f8c8d; font-size: 0.83em; }
+
+        td.field-name.role-stx    { border-color: #e74c3c; color: #ff8a80; }
+        td.field-name.role-len    { border-color: #3498db; color: #80d4ff; }
+        td.field-name.role-incompat { border-color: #d35400; color: #ffab70; }
+        td.field-name.role-compat { border-color: #c0392b; color: #ff7070; }
+        td.field-name.role-seq    { border-color: #1abc9c; color: #80ffe8; }
+        td.field-name.role-sysid  { border-color: #f39c12; color: #ffd080; }
+        td.field-name.role-compid { border-color: #e67e22; color: #ffb060; }
+        td.field-name.role-msgid  { border-color: #16a085; color: #60e0c0; }
+        td.field-name.role-payload{ border-color: #95a5a6; color: #bdc3c7; }
+        td.field-name.role-checksum{border-color: #27ae60; color: #80e8a0; }
+
+        .header-row td   { background: rgba(255,255,255,0.03); }
+        .payload-row td  { background: transparent; }
+        .checksum-row td { background: rgba(39,174,96,0.08); }
+        .trimmed-note    { color: #f39c12; font-size: 0.75em; margin-left: 6px; }
+
+        .byte-box.role-stx     { background: rgba(231,76,60,0.75);  border-color: #e74c3c; }
+        .byte-box.role-len     { background: rgba(52,152,219,0.75); border-color: #3498db; }
+        .byte-box.role-incompat{ background: rgba(211,84,0,0.75);   border-color: #d35400; }
+        .byte-box.role-compat  { background: rgba(192,57,43,0.75);  border-color: #c0392b; }
+        .byte-box.role-seq     { background: rgba(26,188,156,0.75); border-color: #1abc9c; }
+        .byte-box.role-sysid   { background: rgba(243,156,18,0.75); border-color: #f39c12; }
+        .byte-box.role-compid  { background: rgba(230,126,34,0.75); border-color: #e67e22; }
+        .byte-box.role-msgid   { background: rgba(22,160,133,0.75); border-color: #16a085; }
+        .byte-box.role-payload { background: rgba(149,165,166,0.4); border-color: #95a5a6; }
+        .byte-box.role-checksum{ background: rgba(39,174,96,0.75);  border-color: #27ae60; }
+
+        .decode-error {
+            background: rgba(231,76,60,0.15);
+            border: 1px solid #e74c3c;
+            color: #ff8a80;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
@@ -487,6 +611,21 @@
                 <div class="byte-row" id="visual-packet"></div>
             </div>
         </div>
+
+        <!-- Raw Message Decoder -->
+        <div class="card">
+            <div class="section-title">Raw Message Decoder</div>
+            <p class="card-subtitle">Paste any raw MAVLink hex bytes to decode every field. Supports v1 (0xFE) and v2 (0xFD). Bytes can be space-separated, comma-separated, or a continuous hex string.</p>
+            <div class="control-item">
+                <label>Raw Hex Bytes</label>
+                <input type="text" id="decode-input"
+                       placeholder="fd 01 00 00 2e 01 01 88 00 00 00 45 79"
+                       style="font-family: 'Courier New', monospace; font-size: 0.95em;"
+                       onkeydown="if(event.key==='Enter') decodeMavlinkMessage()">
+            </div>
+            <button class="generate-btn decode-btn" onclick="decodeMavlinkMessage()">Decode Message</button>
+            <div id="decode-output" style="margin-top: 20px; display: none;"></div>
+        </div>
     </div>
 
     <script>
@@ -601,6 +740,490 @@
             } catch (error) {
                 document.getElementById('hex-output').innerHTML = `Error: ${error.message}`;
             }
+        }
+        // ─── MAVLink message database ───────────────────────────────────────
+        const MAVLINK_MSGS = {
+            0: {
+                name: 'HEARTBEAT',
+                desc: 'The heartbeat message shows that a system or component is present and responding.',
+                fields: [
+                    { name: 'custom_mode',    type: 'uint32', unit: '',    desc: 'Custom mode bitfield (autopilot-specific)' },
+                    { name: 'type',           type: 'uint8',  unit: '',    desc: 'Vehicle or component type', vals: {0:'GENERIC',1:'FIXED_WING',2:'QUADROTOR',3:'COAXIAL',4:'HELICOPTER',6:'GCS',18:'ONBOARD_CONTROLLER',27:'ADSB'} },
+                    { name: 'autopilot',      type: 'uint8',  unit: '',    desc: 'Autopilot type', vals: {0:'GENERIC',3:'ARDUPILOTMEGA',8:'INVALID',12:'PX4'} },
+                    { name: 'base_mode',      type: 'uint8',  unit: '',    desc: 'System mode bitmap (bit0=custom,bit7=armed)' },
+                    { name: 'system_status',  type: 'uint8',  unit: '',    desc: 'System status flag', vals: {0:'UNINIT',1:'BOOT',2:'CALIBRATING',3:'STANDBY',4:'ACTIVE',5:'CRITICAL',6:'EMERGENCY',7:'POWEROFF'} },
+                    { name: 'mavlink_version',type: 'uint8',  unit: '',    desc: 'MAVLink version (constant value 3)' }
+                ]
+            },
+            1: {
+                name: 'SYS_STATUS',
+                desc: 'General system state including sensor health, battery, and communication stats.',
+                fields: [
+                    { name: 'onboard_control_sensors_present', type: 'uint32', unit: '', desc: 'Bitmap of sensors present' },
+                    { name: 'onboard_control_sensors_enabled', type: 'uint32', unit: '', desc: 'Bitmap of sensors enabled' },
+                    { name: 'onboard_control_sensors_health',  type: 'uint32', unit: '', desc: 'Bitmap of sensors reporting OK' },
+                    { name: 'load',              type: 'uint16', unit: 'd%',  desc: 'Main loop utilization (1000 = 100%)' },
+                    { name: 'voltage_battery',   type: 'uint16', unit: 'mV',  desc: 'Battery voltage (UINT16_MAX if unknown)' },
+                    { name: 'current_battery',   type: 'int16',  unit: 'cA',  desc: 'Battery current (-1 if unknown)' },
+                    { name: 'drop_rate_comm',    type: 'uint16', unit: 'c%',  desc: 'Packet drop rate on comm link' },
+                    { name: 'errors_comm',       type: 'uint16', unit: '',    desc: 'Communication error count' },
+                    { name: 'errors_count1',     type: 'uint16', unit: '',    desc: 'Autopilot-specific error 1' },
+                    { name: 'errors_count2',     type: 'uint16', unit: '',    desc: 'Autopilot-specific error 2' },
+                    { name: 'errors_count3',     type: 'uint16', unit: '',    desc: 'Autopilot-specific error 3' },
+                    { name: 'errors_count4',     type: 'uint16', unit: '',    desc: 'Autopilot-specific error 4' },
+                    { name: 'battery_remaining', type: 'int8',   unit: '%',   desc: 'Battery remaining (-1 if unknown)' }
+                ]
+            },
+            24: {
+                name: 'GPS_RAW_INT',
+                desc: 'The global position as reported by the GPS receiver.',
+                fields: [
+                    { name: 'time_usec',          type: 'uint64', unit: 'us',     desc: 'Timestamp (UNIX Epoch or time since boot)' },
+                    { name: 'lat',                type: 'int32',  unit: 'degE7',  desc: 'Latitude (WGS84)', scale: 1e-7, scaleUnit: 'deg' },
+                    { name: 'lon',                type: 'int32',  unit: 'degE7',  desc: 'Longitude (WGS84)', scale: 1e-7, scaleUnit: 'deg' },
+                    { name: 'alt',                type: 'int32',  unit: 'mm',     desc: 'Altitude MSL', scale: 0.001, scaleUnit: 'm' },
+                    { name: 'eph',                type: 'uint16', unit: '',       desc: 'GPS HDOP × 100 (UINT16_MAX if unknown)' },
+                    { name: 'epv',                type: 'uint16', unit: '',       desc: 'GPS VDOP × 100 (UINT16_MAX if unknown)' },
+                    { name: 'vel',                type: 'uint16', unit: 'cm/s',   desc: 'GPS ground speed', scale: 0.01, scaleUnit: 'm/s' },
+                    { name: 'cog',                type: 'uint16', unit: 'cdeg',   desc: 'Course over ground', scale: 0.01, scaleUnit: 'deg' },
+                    { name: 'fix_type',           type: 'uint8',  unit: '',       desc: 'GPS fix type', vals: {0:'NO_GPS',1:'NO_FIX',2:'2D_FIX',3:'3D_FIX',4:'DGPS',5:'RTK_FLOAT',6:'RTK_FIXED'} },
+                    { name: 'satellites_visible', type: 'uint8',  unit: '',       desc: 'Number of satellites visible' }
+                ]
+            },
+            27: {
+                name: 'RAW_IMU',
+                desc: 'Raw IMU measurements from the 1st IMU unit.',
+                fields: [
+                    { name: 'time_usec', type: 'uint64', unit: 'us', desc: 'Timestamp' },
+                    { name: 'xacc',  type: 'int16', unit: '', desc: 'X acceleration (raw ADC)' },
+                    { name: 'yacc',  type: 'int16', unit: '', desc: 'Y acceleration (raw ADC)' },
+                    { name: 'zacc',  type: 'int16', unit: '', desc: 'Z acceleration (raw ADC)' },
+                    { name: 'xgyro', type: 'int16', unit: '', desc: 'Angular speed X (raw ADC)' },
+                    { name: 'ygyro', type: 'int16', unit: '', desc: 'Angular speed Y (raw ADC)' },
+                    { name: 'zgyro', type: 'int16', unit: '', desc: 'Angular speed Z (raw ADC)' },
+                    { name: 'xmag',  type: 'int16', unit: '', desc: 'X magnetic field (raw ADC)' },
+                    { name: 'ymag',  type: 'int16', unit: '', desc: 'Y magnetic field (raw ADC)' },
+                    { name: 'zmag',  type: 'int16', unit: '', desc: 'Z magnetic field (raw ADC)' }
+                ]
+            },
+            30: {
+                name: 'ATTITUDE',
+                desc: 'Vehicle attitude in the aeronautical frame (right-hand, Z-down).',
+                fields: [
+                    { name: 'time_boot_ms', type: 'uint32', unit: 'ms',    desc: 'Timestamp (time since system boot)' },
+                    { name: 'roll',         type: 'float',  unit: 'rad',   desc: 'Roll angle (-π to +π)' },
+                    { name: 'pitch',        type: 'float',  unit: 'rad',   desc: 'Pitch angle (-π to +π)' },
+                    { name: 'yaw',          type: 'float',  unit: 'rad',   desc: 'Yaw angle (-π to +π)' },
+                    { name: 'rollspeed',    type: 'float',  unit: 'rad/s', desc: 'Roll angular speed' },
+                    { name: 'pitchspeed',   type: 'float',  unit: 'rad/s', desc: 'Pitch angular speed' },
+                    { name: 'yawspeed',     type: 'float',  unit: 'rad/s', desc: 'Yaw angular speed' }
+                ]
+            },
+            33: {
+                name: 'GLOBAL_POSITION_INT',
+                desc: 'Filtered global position (GPS + accelerometers fused). Lat/Lon in 1E-7 degrees.',
+                fields: [
+                    { name: 'time_boot_ms',  type: 'uint32', unit: 'ms',     desc: 'Timestamp' },
+                    { name: 'lat',           type: 'int32',  unit: 'degE7',  desc: 'Latitude WGS84', scale: 1e-7, scaleUnit: 'deg' },
+                    { name: 'lon',           type: 'int32',  unit: 'degE7',  desc: 'Longitude WGS84', scale: 1e-7, scaleUnit: 'deg' },
+                    { name: 'alt',           type: 'int32',  unit: 'mm',     desc: 'Altitude MSL', scale: 0.001, scaleUnit: 'm' },
+                    { name: 'relative_alt',  type: 'int32',  unit: 'mm',     desc: 'Altitude above home', scale: 0.001, scaleUnit: 'm' },
+                    { name: 'vx',            type: 'int16',  unit: 'cm/s',   desc: 'Ground X speed (north)', scale: 0.01, scaleUnit: 'm/s' },
+                    { name: 'vy',            type: 'int16',  unit: 'cm/s',   desc: 'Ground Y speed (east)',  scale: 0.01, scaleUnit: 'm/s' },
+                    { name: 'vz',            type: 'int16',  unit: 'cm/s',   desc: 'Ground Z speed (down)',  scale: 0.01, scaleUnit: 'm/s' },
+                    { name: 'hdg',           type: 'uint16', unit: 'cdeg',   desc: 'Vehicle heading (0=north, 36000=north)', scale: 0.01, scaleUnit: 'deg' }
+                ]
+            },
+            65: {
+                name: 'RC_CHANNELS',
+                desc: 'RC channel input values and RSSI.',
+                fields: [
+                    { name: 'time_boot_ms', type: 'uint32', unit: 'ms', desc: 'Timestamp' },
+                    { name: 'chan1_raw',  type: 'uint16', unit: 'us', desc: 'RC channel 1 (roll)' },
+                    { name: 'chan2_raw',  type: 'uint16', unit: 'us', desc: 'RC channel 2 (pitch)' },
+                    { name: 'chan3_raw',  type: 'uint16', unit: 'us', desc: 'RC channel 3 (throttle)' },
+                    { name: 'chan4_raw',  type: 'uint16', unit: 'us', desc: 'RC channel 4 (yaw)' },
+                    { name: 'chan5_raw',  type: 'uint16', unit: 'us', desc: 'RC channel 5' },
+                    { name: 'chan6_raw',  type: 'uint16', unit: 'us', desc: 'RC channel 6' },
+                    { name: 'chan7_raw',  type: 'uint16', unit: 'us', desc: 'RC channel 7' },
+                    { name: 'chan8_raw',  type: 'uint16', unit: 'us', desc: 'RC channel 8' },
+                    { name: 'chan9_raw',  type: 'uint16', unit: 'us', desc: 'RC channel 9' },
+                    { name: 'chan10_raw', type: 'uint16', unit: 'us', desc: 'RC channel 10' },
+                    { name: 'chan11_raw', type: 'uint16', unit: 'us', desc: 'RC channel 11' },
+                    { name: 'chan12_raw', type: 'uint16', unit: 'us', desc: 'RC channel 12' },
+                    { name: 'chan13_raw', type: 'uint16', unit: 'us', desc: 'RC channel 13' },
+                    { name: 'chan14_raw', type: 'uint16', unit: 'us', desc: 'RC channel 14' },
+                    { name: 'chan15_raw', type: 'uint16', unit: 'us', desc: 'RC channel 15' },
+                    { name: 'chan16_raw', type: 'uint16', unit: 'us', desc: 'RC channel 16' },
+                    { name: 'chan17_raw', type: 'uint16', unit: 'us', desc: 'RC channel 17' },
+                    { name: 'chan18_raw', type: 'uint16', unit: 'us', desc: 'RC channel 18' },
+                    { name: 'chancount', type: 'uint8',  unit: '',   desc: 'Total RC channels being received' },
+                    { name: 'rssi',      type: 'uint8',  unit: '',   desc: 'Signal strength (0-100%, 255=invalid)' }
+                ]
+            },
+            74: {
+                name: 'VFR_HUD',
+                desc: 'Metrics typically displayed on a HUD for fixed-wing aircraft.',
+                fields: [
+                    { name: 'airspeed',     type: 'float',  unit: 'm/s', desc: 'Vehicle airspeed' },
+                    { name: 'groundspeed',  type: 'float',  unit: 'm/s', desc: 'Current ground speed' },
+                    { name: 'alt',          type: 'float',  unit: 'm',   desc: 'Altitude MSL' },
+                    { name: 'climb',        type: 'float',  unit: 'm/s', desc: 'Current climb rate' },
+                    { name: 'heading',      type: 'int16',  unit: 'deg', desc: 'Current heading (0-360, 0=north)' },
+                    { name: 'throttle',     type: 'uint16', unit: '%',   desc: 'Current throttle (0-100%)' }
+                ]
+            },
+            76: {
+                name: 'COMMAND_LONG',
+                desc: 'Send a command with up to seven parameters to the MAV.',
+                fields: [
+                    { name: 'param1',            type: 'float',  unit: '', desc: 'Parameter 1 (command-specific)' },
+                    { name: 'param2',            type: 'float',  unit: '', desc: 'Parameter 2 (command-specific)' },
+                    { name: 'param3',            type: 'float',  unit: '', desc: 'Parameter 3 (command-specific)' },
+                    { name: 'param4',            type: 'float',  unit: '', desc: 'Parameter 4 (command-specific)' },
+                    { name: 'param5',            type: 'float',  unit: '', desc: 'Parameter 5 (command-specific)' },
+                    { name: 'param6',            type: 'float',  unit: '', desc: 'Parameter 6 (command-specific)' },
+                    { name: 'param7',            type: 'float',  unit: '', desc: 'Parameter 7 (command-specific)' },
+                    { name: 'command',           type: 'uint16', unit: '', desc: 'Command ID (MAV_CMD enum)' },
+                    { name: 'target_system',     type: 'uint8',  unit: '', desc: 'Target system ID' },
+                    { name: 'target_component',  type: 'uint8',  unit: '', desc: 'Target component ID' },
+                    { name: 'confirmation',      type: 'uint8',  unit: '', desc: '0=first send, 1-255=retry/feedback' }
+                ]
+            },
+            77: {
+                name: 'COMMAND_ACK',
+                desc: 'Report status of a received command. Result 0 means accepted.',
+                fields: [
+                    { name: 'command', type: 'uint16', unit: '', desc: 'Command ID being acknowledged' },
+                    { name: 'result',  type: 'uint8',  unit: '', desc: 'Result', vals: {0:'ACCEPTED',1:'TEMPORARILY_REJECTED',2:'DENIED',3:'UNSUPPORTED',4:'FAILED',5:'IN_PROGRESS',6:'CANCELLED'} }
+                ]
+            },
+            105: {
+                name: 'HIGHRES_IMU',
+                desc: 'High-resolution IMU data from the primary IMU.',
+                fields: [
+                    { name: 'time_usec',      type: 'uint64', unit: 'us',   desc: 'Timestamp' },
+                    { name: 'xacc',           type: 'float',  unit: 'm/s²', desc: 'X acceleration' },
+                    { name: 'yacc',           type: 'float',  unit: 'm/s²', desc: 'Y acceleration' },
+                    { name: 'zacc',           type: 'float',  unit: 'm/s²', desc: 'Z acceleration' },
+                    { name: 'xgyro',          type: 'float',  unit: 'rad/s',desc: 'Angular speed X' },
+                    { name: 'ygyro',          type: 'float',  unit: 'rad/s',desc: 'Angular speed Y' },
+                    { name: 'zgyro',          type: 'float',  unit: 'rad/s',desc: 'Angular speed Z' },
+                    { name: 'xmag',           type: 'float',  unit: 'gauss',desc: 'X Magnetic field' },
+                    { name: 'ymag',           type: 'float',  unit: 'gauss',desc: 'Y Magnetic field' },
+                    { name: 'zmag',           type: 'float',  unit: 'gauss',desc: 'Z Magnetic field' },
+                    { name: 'abs_pressure',   type: 'float',  unit: 'hPa', desc: 'Absolute pressure' },
+                    { name: 'diff_pressure',  type: 'float',  unit: 'hPa', desc: 'Differential pressure' },
+                    { name: 'pressure_alt',   type: 'float',  unit: 'm',   desc: 'Altitude from pressure' },
+                    { name: 'temperature',    type: 'float',  unit: 'degC',desc: 'Temperature' },
+                    { name: 'fields_updated', type: 'uint16', unit: '',    desc: 'Bitmap of fields that changed' },
+                    { name: 'id',             type: 'uint8',  unit: '',    desc: 'IMU sensor ID' }
+                ]
+            },
+            136: {
+                name: 'SCALED_PRESSURE2',
+                desc: 'Scaled pressure measurements from a 2nd barometer.',
+                fields: [
+                    { name: 'time_boot_ms', type: 'uint32', unit: 'ms',   desc: 'Timestamp (time since system boot)' },
+                    { name: 'press_abs',    type: 'float',  unit: 'hPa',  desc: 'Absolute pressure' },
+                    { name: 'press_diff',   type: 'float',  unit: 'hPa',  desc: 'Differential pressure' },
+                    { name: 'temperature',  type: 'int16',  unit: 'cdegC',desc: 'Absolute pressure temperature', scale: 0.01, scaleUnit: 'degC' }
+                ]
+            },
+            147: {
+                name: 'BATTERY_STATUS',
+                desc: 'Battery information.',
+                fields: [
+                    { name: 'current_consumed',  type: 'int32',  unit: 'mAh', desc: 'Consumed charge (-1 if unknown)' },
+                    { name: 'energy_consumed',   type: 'int32',  unit: 'hJ',  desc: 'Consumed energy (-1 if unknown)' },
+                    { name: 'temperature',       type: 'int16',  unit: 'cdegC',desc: 'Temperature (INT16_MAX if unknown)', scale: 0.01, scaleUnit: 'degC' },
+                    { name: 'voltages',          type: 'uint16', unit: 'mV',  desc: 'Cell 1 voltage (UINT16_MAX if invalid)' },
+                    { name: 'current_battery',   type: 'int16',  unit: 'cA',  desc: 'Battery current (-1 if unknown)' },
+                    { name: 'id',                type: 'uint8',  unit: '',    desc: 'Battery ID' },
+                    { name: 'battery_function',  type: 'uint8',  unit: '',    desc: 'Battery function', vals: {0:'UNKNOWN',1:'ALL',2:'PROPULSION',3:'AVIONICS',4:'PAYLOAD'} },
+                    { name: 'type',              type: 'uint8',  unit: '',    desc: 'Battery type', vals: {0:'UNKNOWN',1:'LIPO',2:'LIFE',3:'LION',4:'NIMH'} },
+                    { name: 'battery_remaining', type: 'int8',   unit: '%',   desc: 'Remaining battery (0-100%, -1 unknown)' }
+                ]
+            },
+            253: {
+                name: 'STATUSTEXT',
+                desc: 'Status text message. These are printed in yellow in the ground station.',
+                fields: [
+                    { name: 'severity', type: 'uint8', unit: '', desc: 'Severity level', vals: {0:'EMERGENCY',1:'ALERT',2:'CRITICAL',3:'ERROR',4:'WARNING',5:'NOTICE',6:'INFO',7:'DEBUG'} }
+                ]
+            }
+        };
+
+        // ─── Decode helpers ─────────────────────────────────────────────────
+        function parseHexInput(input) {
+            const cleaned = input.trim().replace(/0x/gi, '');
+            const parts = cleaned.split(/[\s,;:]+/).filter(b => b);
+            if (parts.length > 1) {
+                return parts.filter(b => /^[0-9a-fA-F]{1,2}$/.test(b)).map(b => parseInt(b, 16));
+            }
+            const bytes = [];
+            for (let i = 0; i + 1 < cleaned.length; i += 2) {
+                const byte = parseInt(cleaned.substr(i, 2), 16);
+                if (!isNaN(byte)) bytes.push(byte);
+            }
+            return bytes;
+        }
+
+        function typeSize(type) {
+            return { uint8:1, int8:1, uint16:2, int16:2, uint32:4, int32:4, float:4, uint64:8, int64:8, double:8 }[type] || 1;
+        }
+
+        function readFieldValue(type, bytes, offset) {
+            const buf = new ArrayBuffer(8);
+            const view = new DataView(buf);
+            const size = typeSize(type);
+            for (let i = 0; i < size; i++) view.setUint8(i, offset + i < bytes.length ? bytes[offset + i] : 0);
+            switch (type) {
+                case 'uint8':  return view.getUint8(0);
+                case 'int8':   return view.getInt8(0);
+                case 'uint16': return view.getUint16(0, true);
+                case 'int16':  return view.getInt16(0, true);
+                case 'uint32': return view.getUint32(0, true);
+                case 'int32':  return view.getInt32(0, true);
+                case 'float':  return parseFloat(view.getFloat32(0, true).toFixed(6));
+                case 'double': return parseFloat(view.getFloat64(0, true).toFixed(10));
+                case 'uint64': {
+                    const lo = view.getUint32(0, true), hi = view.getUint32(4, true);
+                    return hi === 0 ? lo : `0x${hi.toString(16).padStart(8,'0')}${lo.toString(16).padStart(8,'0')}`;
+                }
+                default: return view.getUint8(0);
+            }
+        }
+
+        function describeSysId(id) {
+            if (id === 1)   return 'System 1 — typically the main vehicle / drone';
+            if (id === 255) return 'Ground Control Station (GCS)';
+            if (id === 0)   return 'Broadcast (all systems)';
+            return `System ${id}`;
+        }
+
+        function describeCompId(id) {
+            const n = {0:'Broadcast',1:'Autopilot / Flight Controller',25:'Camera (general)',26:'Gimbal',100:'Camera',190:'Gimbal',240:'OSD',250:'UDP Bridge',254:'GCS',255:'Mission Planner'};
+            return n[id] ? `${n[id]} (${id})` : `Component ${id}`;
+        }
+
+        function describeIncompat(f) {
+            if (f === 0) return 'No incompatibility flags';
+            const parts = [];
+            if (f & 0x01) parts.push('MAVLINK_IFLAG_SIGNED — message is signed');
+            return parts.join(', ') || `Flags: 0x${f.toString(16).padStart(2,'0')}`;
+        }
+
+        function describeCompat(f) {
+            return f === 0 ? 'No compatibility flags' : `Flags: 0x${f.toString(16).padStart(2,'0')}`;
+        }
+
+        // ─── Main decode entry point ─────────────────────────────────────────
+        function decodeMavlinkMessage() {
+            const input = document.getElementById('decode-input').value;
+            const bytes = parseHexInput(input);
+            const output = document.getElementById('decode-output');
+
+            if (bytes.length < 6) {
+                output.innerHTML = `<div class="decode-error">Too few bytes (got ${bytes.length}). Need at least 6 bytes for a valid MAVLink message.</div>`;
+                output.style.display = 'block';
+                return;
+            }
+
+            const stx = bytes[0];
+            let data;
+            if (stx === 0xFE) {
+                data = parseMavV1(bytes);
+            } else if (stx === 0xFD) {
+                data = parseMavV2(bytes);
+            } else {
+                output.innerHTML = `<div class="decode-error">Invalid start byte: 0x${stx.toString(16).toUpperCase().padStart(2,'0')}. Expected 0xFE (v1) or 0xFD (v2).</div>`;
+                output.style.display = 'block';
+                return;
+            }
+
+            renderDecoded(data, output);
+        }
+
+        function parseMavV1(bytes) {
+            const len    = bytes[1];
+            const seq    = bytes[2];
+            const sysid  = bytes[3];
+            const compid = bytes[4];
+            const msgid  = bytes[5];
+            return {
+                version: 1,
+                msgid, sysid, compid, seq, len,
+                headerFields: [
+                    { name:'STX',    bytes:[bytes[0]], value:`0x${bytes[0].toString(16).toUpperCase().padStart(2,'0')}`, desc:'MAVLink v1 start marker (0xFE)', role:'stx' },
+                    { name:'LEN',    bytes:[bytes[1]], value:`${len}`,    desc:'Payload length in bytes', role:'len' },
+                    { name:'SEQ',    bytes:[bytes[2]], value:seq,         desc:'Sequence number (wraps 0–255)', role:'seq' },
+                    { name:'SYS ID', bytes:[bytes[3]], value:sysid,       desc:describeSysId(sysid), role:'sysid' },
+                    { name:'COMP ID',bytes:[bytes[4]], value:compid,      desc:describeCompId(compid), role:'compid' },
+                    { name:'MSG ID', bytes:[bytes[5]], value:msgid,       desc:`Message #${msgid}`, role:'msgid' }
+                ],
+                payloadBytes: bytes.slice(6, 6 + len),
+                crcBytes: bytes.slice(6 + len),
+                allBytes: bytes,
+                headerLen: 6
+            };
+        }
+
+        function parseMavV2(bytes) {
+            const len     = bytes[1];
+            const incompat = bytes[2];
+            const compat  = bytes[3];
+            const seq     = bytes[4];
+            const sysid   = bytes[5];
+            const compid  = bytes[6];
+            const msgid   = bytes[7] | (bytes[8] << 8) | ((bytes[9] || 0) << 16);
+            return {
+                version: 2,
+                msgid, sysid, compid, seq, len, incompat, compat,
+                headerFields: [
+                    { name:'STX',     bytes:[bytes[0]],         value:`0x${bytes[0].toString(16).toUpperCase().padStart(2,'0')}`, desc:'MAVLink v2 start marker (0xFD)', role:'stx' },
+                    { name:'LEN',     bytes:[bytes[1]],         value:`${len}`,    desc:'Payload length in bytes (trailing zeros may be trimmed)', role:'len' },
+                    { name:'INCOMPAT',bytes:[bytes[2]],         value:incompat,    desc:describeIncompat(incompat), role:'incompat' },
+                    { name:'COMPAT',  bytes:[bytes[3]],         value:compat,      desc:describeCompat(compat), role:'compat' },
+                    { name:'SEQ',     bytes:[bytes[4]],         value:seq,         desc:'Sequence number (wraps 0–255)', role:'seq' },
+                    { name:'SYS ID',  bytes:[bytes[5]],         value:sysid,       desc:describeSysId(sysid), role:'sysid' },
+                    { name:'COMP ID', bytes:[bytes[6]],         value:compid,      desc:describeCompId(compid), role:'compid' },
+                    { name:'MSG ID',  bytes:bytes.slice(7,10),  value:msgid,       desc:`Message #${msgid} (3 bytes, little-endian)`, role:'msgid' }
+                ],
+                payloadBytes: bytes.slice(10, 10 + len),
+                crcBytes: bytes.slice(10 + len),
+                allBytes: bytes,
+                headerLen: 10
+            };
+        }
+
+        // ─── Render decoded output ───────────────────────────────────────────
+        function renderDecoded(data, output) {
+            const msgInfo = MAVLINK_MSGS[data.msgid];
+            const msgName = msgInfo ? msgInfo.name : 'UNKNOWN MESSAGE';
+
+            let html = `<div class="output-box">`;
+
+            // Summary line
+            html += `<div class="decode-summary">
+                <span class="decode-badge v${data.version}">MAVLink v${data.version}</span>
+                <span class="decode-msgname">${msgName} <span style="opacity:0.5">#${data.msgid}</span></span>
+                <span class="decode-meta">SYS:${data.sysid} &nbsp;|&nbsp; COMP:${data.compid} &nbsp;|&nbsp; SEQ:${data.seq} &nbsp;|&nbsp; ${data.allBytes.length} bytes</span>
+            </div>`;
+
+            if (msgInfo) {
+                html += `<div class="decode-msg-desc">${msgInfo.desc}</div>`;
+            } else {
+                html += `<div class="decode-msg-desc" style="border-color:#e67e22;background:rgba(230,126,34,0.12)">Message ID ${data.msgid} is not in the built-in database — header fields are shown but payload cannot be decoded by field name.</div>`;
+            }
+
+            // Colored byte strip
+            html += `<div class="byte-row" style="margin-bottom:16px">`;
+            data.allBytes.forEach((byte, i) => {
+                const { role, label } = byteRole(i, data);
+                html += `<div class="byte-box role-${role}">
+                    <span class="byte-label">${label}</span>
+                    0x${byte.toString(16).toUpperCase().padStart(2,'0')}
+                </div>`;
+            });
+            html += `</div>`;
+
+            // Field table
+            html += `<table class="decode-table">
+                <thead><tr><th>Field</th><th>Raw Bytes</th><th>Decoded Value</th><th>Description</th></tr></thead>
+                <tbody>`;
+
+            // Header rows
+            data.headerFields.forEach(f => {
+                const hex = f.bytes.map(b => `0x${b.toString(16).toUpperCase().padStart(2,'0')}`).join(' ');
+                html += `<tr class="header-row">
+                    <td class="field-name role-${f.role}">${f.name}</td>
+                    <td class="field-hex">${hex}</td>
+                    <td class="field-value">${f.value}</td>
+                    <td class="field-desc">${f.desc}</td>
+                </tr>`;
+            });
+
+            // Payload rows
+            if (data.payloadBytes.length === 0 && (!msgInfo || msgInfo.fields.reduce((s,f)=>s+typeSize(f.type),0) === 0)) {
+                html += `<tr class="payload-row"><td colspan="4" class="field-desc" style="padding:10px 12px">No payload</td></tr>`;
+            } else if (msgInfo && msgInfo.fields) {
+                const totalExpected = msgInfo.fields.reduce((s, f) => s + typeSize(f.type), 0);
+                const padded = [...data.payloadBytes];
+                while (padded.length < totalExpected) padded.push(0);
+                let offset = 0;
+                msgInfo.fields.forEach(field => {
+                    const size = typeSize(field.type);
+                    const fieldBytes = padded.slice(offset, offset + size);
+                    const raw = readFieldValue(field.type, padded, offset);
+                    const wasPadded = offset >= data.payloadBytes.length;
+                    const hex = fieldBytes.map(b => `0x${b.toString(16).toUpperCase().padStart(2,'0')}`).join(' ');
+                    let display;
+                    if (field.vals && field.vals[raw] !== undefined) {
+                        display = `${raw} — ${field.vals[raw]}`;
+                    } else if (field.scale !== undefined) {
+                        const scaled = (raw * field.scale).toFixed(6).replace(/\.?0+$/, '');
+                        display = `${raw} ${field.unit} &nbsp;→&nbsp; <strong>${scaled} ${field.scaleUnit}</strong>`;
+                    } else {
+                        display = `${raw}${field.unit ? ' ' + field.unit : ''}`;
+                    }
+                    const paddedNote = wasPadded ? `<span class="trimmed-note">(zero-padded)</span>` : '';
+                    html += `<tr class="payload-row">
+                        <td class="field-name role-payload">${field.name}${paddedNote}</td>
+                        <td class="field-hex">${hex}</td>
+                        <td class="field-value">${display}</td>
+                        <td class="field-desc">${field.desc}</td>
+                    </tr>`;
+                    offset += size;
+                });
+            } else {
+                data.payloadBytes.forEach((byte, i) => {
+                    html += `<tr class="payload-row">
+                        <td class="field-name role-payload">payload[${i}]</td>
+                        <td class="field-hex">0x${byte.toString(16).toUpperCase().padStart(2,'0')}</td>
+                        <td class="field-value">${byte}</td>
+                        <td class="field-desc">Raw payload byte (message type unknown)</td>
+                    </tr>`;
+                });
+            }
+
+            // CRC row
+            if (data.crcBytes.length >= 2) {
+                const crcVal = data.crcBytes[0] | (data.crcBytes[1] << 8);
+                const hex = `0x${data.crcBytes[0].toString(16).toUpperCase().padStart(2,'0')} 0x${data.crcBytes[1].toString(16).toUpperCase().padStart(2,'0')}`;
+                html += `<tr class="checksum-row">
+                    <td class="field-name role-checksum">CRC</td>
+                    <td class="field-hex">${hex}</td>
+                    <td class="field-value">0x${crcVal.toString(16).toUpperCase().padStart(4,'0')}</td>
+                    <td class="field-desc">CRC-16/MCRF4XX checksum (little-endian)</td>
+                </tr>`;
+            }
+
+            html += `</tbody></table></div>`;
+            output.innerHTML = html;
+            output.style.display = 'block';
+        }
+
+        function byteRole(i, data) {
+            const hl = data.headerLen;
+            const pe = hl + data.len;
+            if (i === 0) return { role:'stx',      label:'STX' };
+            if (i === 1) return { role:'len',       label:'LEN' };
+            if (data.version === 1) {
+                if (i === 2) return { role:'seq',    label:'SEQ' };
+                if (i === 3) return { role:'sysid',  label:'SYS' };
+                if (i === 4) return { role:'compid', label:'CMP' };
+                if (i === 5) return { role:'msgid',  label:'MSG' };
+            } else {
+                if (i === 2) return { role:'incompat', label:'INC' };
+                if (i === 3) return { role:'compat',   label:'COM' };
+                if (i === 4) return { role:'seq',      label:'SEQ' };
+                if (i === 5) return { role:'sysid',    label:'SYS' };
+                if (i === 6) return { role:'compid',   label:'CMP' };
+                if (i <= 9)  return { role:'msgid',    label:'MSG' };
+            }
+            if (i < pe)  return { role:'payload',  label:`P${i - hl}` };
+            return           { role:'checksum', label:'CRC' };
         }
     </script>
 </body>
